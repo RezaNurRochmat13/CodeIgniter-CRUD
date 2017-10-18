@@ -41,7 +41,7 @@
 
                     <div class="clearfix"></div>
                   </div>
-                   <a href="<?php echo site_url('admin/Admin_Home/addUser')?>" class="btn btn-success">Add User</a>
+                   <a href="<?php echo site_url('admin/Pemeriksaan/addPemeriksaan')?>" class="btn btn-success">Add Pemeriksaan</a>
                   <div class="x_content">
                      <?php echo $this->session->flashdata('msg2');?>
 
@@ -50,6 +50,7 @@
                           <thead>
                             <tr>
                               <th>ID Komisioning</th>
+                              <th>Nama Pelanggan</th>
                               <th>Error Meter</th>
                               <th>Error R</th>
                               <th>Error S</th>
@@ -81,6 +82,7 @@
                               ?>
                             <tr>
                                 <td><?php echo $data->idkomisioning?></td>
+                                <td><?php echo $data->nama?></td>
                                 <td><?php echo $data->erormeter?></td>
                                 <td><?php echo $data->erorR?></td>
                                 <td><?php echo $data->erorS?></td>
@@ -99,8 +101,8 @@
                                 <td><?php echo $data->ba?></td>
                                 <td><?php echo date("d F Y",strtotime($data->created_at))?></td>
                                 <td>
-                                  <?php echo anchor('admin/Admin_Home/edit/'.$data->idkomisioning,'<button type="button" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i></button>');?>
-              <?php echo anchor('admin/Admin_Home/delete/'.$data->idkomisioning,'<button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>');?>
+                                  <?php echo anchor('admin/Pemeriksaan/edit/'.$data->idkomisioning,'<button type="button" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i></button>');?>
+              <?php echo anchor('admin/Pemeriksaan/delete/'.$data->idkomisioning,'<button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>');?>
                                 </td>
 
                                

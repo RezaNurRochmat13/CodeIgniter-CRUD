@@ -16,26 +16,64 @@ class Pemeriksaan_Model extends CI_Model{
 
 	public function data($number,$offset){
 		$this->db->select('*');
+		$this->db->join('tbl_plg','tbl_plg.idpel=tbl_pemeriksaan.idpel','left');
 		return $query = $this->db->get('tbl_pemeriksaan',$number,$offset)->result();		
 	}
  
 	public function jumlah_data(){
 		$this->db->select('*');
+		$this->db->join('tbl_plg','tbl_plg.idpel=tbl_pemeriksaan.idpel','left');
 		return $this->db->get('tbl_pemeriksaan')->num_rows();
 	}
 
+	public function getPelanggan(){
+		$this->db->select('*');
+		$query = $this->db->get('tbl_plg');
+		return $query->result();
+	}
+
 	public function addUser(){
-		$username 	= $this->input->post('username',TRUE);
-		$password 	= $this->input->post('password',TRUE);
-		$level 		= $this->input->post('level',TRUE);
+		$idpel 			= $this->input->post('idpel',TRUE);
+		$erormeter 		= $this->input->post('erormeter',TRUE);
+		$erorR 			= $this->input->post('erorR',TRUE);
+		$erorS 			= $this->input->post('erorS',TRUE);
+		$erorT 			= $this->input->post('erorT',TRUE);
+		$jenisCT		= $this->input->post('jenisCT',TRUE);
+		$arusCT 		= $this->input->post('arusCT',TRUE);
+		$rasioCT 		= $this->input->post('rasioCT',TRUE);
+		$segelkwh 		= $this->input->post('segelkwh',TRUE);
+		$segelterminal 	= $this->input->post('segelterminal',TRUE);
+		$segelboxapp 	= $this->input->post('segelboxapp',TRUE);
+		$segelgardu		= $this->input->post('segelgardu',TRUE);
+		$segelpembatas 	= $this->input->post('segelpembatas',TRUE);
+		$tglperiksa 	= $this->input->post('tglperiksa',TRUE);
+		$keterangan 	= $this->input->post('keterangan',TRUE);
+		$petugas 		= $this->input->post('petugas',TRUE);
+		$ba 			= $this->input->post('ba',TRUE);
 
 		$data = array(
-			'username' 	=> $username,
-			'password' 	=> sha1($password),
-			'level' 	=> $level
+			'idpel' 		=> $idpel,
+			'erormeter' 	=> $erormeter,
+			'erorR' 		=> $erorR,
+			'erorS'			=> $erorS,
+			'erorT'			=> $erorT,
+			'jenisCT' 		=> $jenisCT,
+			'arusCT' 		=> $arusCT,
+			'rasioCT'		=> $rasioCT,
+			'segelkwh' 		=> $segelkwh,
+			'segelterminal'	=> $segelterminal,
+			'segelboxapp'	=> $segelboxapp,
+			'segelgardu' 	=> $segelgardu,
+			'segelpembatas'	=> $segelpembatas,
+			'tglperiksa' 	=> date("Y-m-d",strtotime($tglperiksa)),
+			'keterangan' 	=> $keterangan,
+			'petugas' 		=> $petugas,
+			'ba'			=> $ba,
+			'created_at' 	=> date("Y-m-d")
+
 		);
 
-		$this->db->insert('users',$data);
+		$this->db->insert('tbl_pemeriksaan',$data);
 
 	}
 

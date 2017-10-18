@@ -48,18 +48,33 @@ class Pemeriksaan extends CI_Controller{
 		$this->load->view('include/footer');
 	}
 
-	public function addUser(){
-		$this->form_validation->set_rules('username','Username','required|trim|xss_clean');
-		$this->form_validation->set_rules('password','Password','required|trim|xss_clean');
-		$this->form_validation->set_rules('level','Level User','required|trim|xss_clean');
+	public function addPemeriksaan(){
+		$this->form_validation->set_rules('idpel','ID Pelanggan','required|trim|xss_clean');
+		$this->form_validation->set_rules('erormeter','Error Meter','required|trim|xss_clean');
+		$this->form_validation->set_rules('erorR','Error R','required|trim|xss_clean');
+		$this->form_validation->set_rules('erorS','Error S','required|trim|xss_clean');
+		$this->form_validation->set_rules('erorT','Error T','required|trim|xss_clean');
+		$this->form_validation->set_rules('jenisCT','Jenis CT','required|trim|xss_clean');
+		$this->form_validation->set_rules('arusCT','Arus CT','required|trim|xss_clean');
+		$this->form_validation->set_rules('rasioCT','Rasio CT','required|trim|xss_clean');
+		$this->form_validation->set_rules('segelkwh','Segel KWH','required|trim|xss_clean');
+		$this->form_validation->set_rules('segelterminal','Segel Terminal','required|trim|xss_clean');
+		$this->form_validation->set_rules('segelboxapp','Segel Box App','required|trim|xss_clean');
+		$this->form_validation->set_rules('segelgardu','Segel Gardu','required|trim|xss_clean');
+		$this->form_validation->set_rules('segelpembatas','Segel Pembatas','required|trim|xss_clean');
+		$this->form_validation->set_rules('tglperiksa','Tanggal Periksa','required|trim|xss_clean');
+		$this->form_validation->set_rules('keterangan','Keterangan','required|trim|xss_clean');
+		$this->form_validation->set_rules('petugas','Petugas','required|trim|xss_clean');
+		$this->form_validation->set_rules('ba','BA','required|trim|xss_clean');
 
 		if ($this->form_validation->run() == FALSE) {
+			$data['pelanggan'] = $this->Pemeriksaan_Model->getPelanggan();
 			$this->load->view('include/header');
-			$this->load->view('admin/add_user_form');
+			$this->load->view('admin/pemeriksaan/add_pemeriksaan_form', $data);
 			$this->load->view('include/footer');
 			}
 			else{
-				$this->User_Model->addUser();
+				$this->Pemeriksaan_Model->addUser();
 				echo "<script>
 		    window.alert('Data inserted successfully');
 		    window.location.href='index';
@@ -69,39 +84,97 @@ class Pemeriksaan extends CI_Controller{
 		}
 
 	public function edit($kode){
-		$where = array('id_users' => $kode);
-		$data['edit'] = $this->User_Model->edit_data($where,'users')->result();
-
+		$where = array('idkomisioning' => $kode);
+		$data['edit'] = $this->Pemeriksaan_Model->edit_data($where,'tbl_pemeriksaan')->result();
+		$data['pelanggan'] = $this->Pemeriksaan_Model->getPelanggan();
 		$this->load->view('include/header');
-		$this->load->view('admin/edit_user_form', $data);
+		$this->load->view('admin/pemeriksaan/edit_pemeriksaan_form', $data);
 		$this->load->view('include/footer');
 	}
 	public function update(){
-		$id_users 			= $this->input->post('id_users');
-		$username 		= $this->input->post('username');
-		$password 		= $this->input->post('password');
-		$level 			= $this->input->post('level');
+		$this->form_validation->set_rules('idpel','ID Pelanggan','required|trim|xss_clean');
+		$this->form_validation->set_rules('erormeter','Error Meter','required|trim|xss_clean');
+		$this->form_validation->set_rules('erorR','Error R','required|trim|xss_clean');
+		$this->form_validation->set_rules('erorS','Error S','required|trim|xss_clean');
+		$this->form_validation->set_rules('erorT','Error T','required|trim|xss_clean');
+		$this->form_validation->set_rules('jenisCT','Jenis CT','required|trim|xss_clean');
+		$this->form_validation->set_rules('arusCT','Arus CT','required|trim|xss_clean');
+		$this->form_validation->set_rules('rasioCT','Rasio CT','required|trim|xss_clean');
+		$this->form_validation->set_rules('segelkwh','Segel KWH','required|trim|xss_clean');
+		$this->form_validation->set_rules('segelterminal','Segel Terminal','required|trim|xss_clean');
+		$this->form_validation->set_rules('segelboxapp','Segel Box App','required|trim|xss_clean');
+		$this->form_validation->set_rules('segelgardu','Segel Gardu','required|trim|xss_clean');
+		$this->form_validation->set_rules('segelpembatas','Segel Pembatas','required|trim|xss_clean');
+		$this->form_validation->set_rules('tglperiksa','Tanggal Periksa','required|trim|xss_clean');
+		$this->form_validation->set_rules('keterangan','Keterangan','required|trim|xss_clean');
+		$this->form_validation->set_rules('petugas','Petugas','required|trim|xss_clean');
+		$this->form_validation->set_rules('ba','BA','required|trim|xss_clean');
 
-		$data = array(
-			'username' 	=> $username,
-			'password'	=> sha1($password),
-			'level'		=> $level
+		if ($this->form_validation->run() == FALSE) {
+			$data['pelanggan'] = $this->Pemeriksaan_Model->getPelanggan();
+			$this->load->view('include/header');
+			$this->load->view('admin/pemeriksaan/edit_pemeriksaan_form', $data);
+			$this->load->view('include/footer');
+			}
+			else{
+				$idkomisioning 	= $this->input->post('idkomisioning',TRUE); 
+				$idpel 			= $this->input->post('idpel',TRUE);
+				$erormeter 		= $this->input->post('erormeter',TRUE);
+				$erorR 			= $this->input->post('erorR',TRUE);
+				$erorS 			= $this->input->post('erorS',TRUE);
+				$erorT 			= $this->input->post('erorT',TRUE);
+				$jenisCT		= $this->input->post('jenisCT',TRUE);
+				$arusCT 		= $this->input->post('arusCT',TRUE);
+				$rasioCT 		= $this->input->post('rasioCT',TRUE);
+				$segelkwh 		= $this->input->post('segelkwh',TRUE);
+				$segelterminal 	= $this->input->post('segelterminal',TRUE);
+				$segelboxapp 	= $this->input->post('segelboxapp',TRUE);
+				$segelgardu		= $this->input->post('segelgardu',TRUE);
+				$segelpembatas 	= $this->input->post('segelpembatas',TRUE);
+				$tglperiksa 	= $this->input->post('tglperiksa',TRUE);
+				$keterangan 	= $this->input->post('keterangan',TRUE);
+				$petugas 		= $this->input->post('petugas',TRUE);
+				$ba 			= $this->input->post('ba',TRUE);
 
-		);
-		$where = array(
-			'id_users' => $id_users
-			);
-		$this->User_Model->update_data($where,$data,'users');
-		echo "<script>
-		    window.alert('Data successfully updated');
-		    window.location.href='index';
-		    </script>";
+				$data = array(
+					'idpel' 		=> $idpel,
+					'erormeter' 	=> $erormeter,
+					'erorR' 		=> $erorR,
+					'erorS'			=> $erorS,
+					'erorT'			=> $erorT,
+					'jenisCT' 		=> $jenisCT,
+					'arusCT' 		=> $arusCT,
+					'rasioCT'		=> $rasioCT,
+					'segelkwh' 		=> $segelkwh,
+					'segelterminal'	=> $segelterminal,
+					'segelboxapp'	=> $segelboxapp,
+					'segelgardu' 	=> $segelgardu,
+					'segelpembatas'	=> $segelpembatas,
+					'tglperiksa' 	=> date("Y-m-d",strtotime($tglperiksa)),
+					'keterangan' 	=> $keterangan,
+					'petugas' 		=> $petugas,
+					'ba'			=> $ba,
+					'created_at' 	=> date("Y-m-d")
+
+				);
+
+				$where = array(
+					'idkomisioning' => $idkomisioning
+					);
+				$this->Pemeriksaan_Model->update_data($where,$data,'tbl_pemeriksaan');
+				echo "<script>
+				    window.alert('Data successfully updated');
+				    window.location.href='index';
+				    </script>";
+
+			}
+		
 	}
 	public function delete($id){
-		$where = array('id_users' => $id);
-		$this->User_Model->delete($where,'users');
+		$where = array('idkomisioning' => $id);
+		$this->Pemeriksaan_Model->delete($where,'tbl_pemeriksaan');
 		$msg2 = "<div class='alert alert-danger'> Data successfully deleted </div>";
         $this->session->set_flashdata("msg2", $msg2); 
-		redirect('admin/Admin_Home/index');
+		redirect('admin/Pemeriksaan/index');
 	}
 }
